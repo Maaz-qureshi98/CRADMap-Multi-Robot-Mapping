@@ -19,3 +19,8 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+
+# VPN credentials (never commit; ask the RoboHub admin for your own)
+*.key
+*.crt
+*.pem

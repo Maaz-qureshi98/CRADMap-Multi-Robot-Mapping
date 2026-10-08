@@ -12,7 +12,6 @@ University of Waterloo
 [![DOI](https://img.shields.io/badge/DOI-10.1109%2FICARM65671.2025.11293594-blue.svg)](https://doi.org/10.1109/ICARM65671.2025.11293594)
 [![Video](https://img.shields.io/badge/YouTube-Demo%20Video-FF0000.svg?logo=youtube)](https://youtu.be/eTLxCY2rRMA)
 [![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble-22314E.svg?logo=ros)](https://docs.ros.org/en/humble/)
-[![Radar Driver](https://img.shields.io/badge/GitHub-4D%20Radar%20Driver-181717.svg?logo=github)](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)
 [![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420.svg?logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
 
 ### **[📄 Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/11293594)** &nbsp;·&nbsp; **[▶ Watch the demo video on YouTube](https://youtu.be/eTLxCY2rRMA)**
@@ -96,15 +95,18 @@ CRADMap-Multi-Robot-Mapping/
 ├── backend/                     # COVINS back-end configuration
 │   ├── config_backend.yaml
 │   └── config_comm.yaml
+├── radar/                       # Altos 4D mmWave radar driver (ROS 2 + ROS 1), RViz configs
+├── drivers/
+│   └── quectel_5g/              # Quectel QConnectManager v1.6.5 source + 5G modem setup notes
+├── docker/                      # TurtleBot 4 (UWBot) Docker image, start script and VPN tooling
 ├── covins/                      # COVINS framework with the ORB-SLAM3 front-end (third party, GPLv3)
-├── ORB_SLAM3_ROS2/              # ROS 2 wrapper for ORB-SLAM3 (third party)
+├── ORB_SLAM3_ROS2/              # ROS 2 wrapper for ORB-SLAM3, patched for CRADMap (third party, GPLv3)
 ├── image_transport_plugins/     # image_transport plugins, including zstd (third party, BSD)
-├── radar_driver/                # submodule: 4D mmWave radar ROS 2 driver (Radar-ROS2_Perception-4DmmWave)
 └── media/
     └── gifs/                    # demo GIFs (made from the YouTube video)
 ```
 
-The 4D radar driver is included as a git submodule in [`radar_driver/`](radar_driver). It comes from **[Radar-ROS2_Perception-4DmmWave](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)**.
+Everything needed to reproduce CRADMap lives in this one repository: the robot and server scripts, the 4D radar driver, the 5G modem driver and the Docker environment.
 
 ## Requirements
 
@@ -127,15 +129,30 @@ The 4D radar driver is included as a git submodule in [`radar_driver/`](radar_dr
 
 ## Getting started
 
-Clone the repository together with the radar driver submodule:
-
 ```bash
-git clone --recursive https://github.com/Maaz-qureshi98/CRADMap-Multi-Robot-Mapping.git
-# already cloned without --recursive? Fetch the submodule with:
-git submodule update --init --recursive
+git clone https://github.com/Maaz-qureshi98/CRADMap-Multi-Robot-Mapping.git
+cd CRADMap-Multi-Robot-Mapping
 ```
 
-### 1. Robot: 5G connectivity and DDS
+### 0. Development environment (optional): Docker
+
+[`docker/`](docker) has the TurtleBot 4 (UWBot) ROS 2 Humble container used in the experiments. Start it with `./docker/start.sh`. See [`docker/README.md`](docker/README.md) for the web interface, multi-robot containers and the VPN tunnel.
+
+> [!NOTE]
+> VPN credentials (`ca.crt`, `client.crt`, `client.key`) are **not** included. Ask the RoboHub admin for your own and place them in `docker/vpn/`. They are git-ignored.
+
+### 1. Robot: 5G modem driver
+
+Build the Quectel connection manager from [`drivers/quectel_5g/`](drivers/quectel_5g) and test the 5G link. Full notes, including firmware update, kernel module and AT commands, are in [`SETUP_NOTES.md`](drivers/quectel_5g/SETUP_NOTES.md).
+
+```bash
+cd drivers/quectel_5g
+make
+sudo ./quectel-CM -4 -6
+ping -I wwan0 8.8.8.8
+```
+
+### 2. Robot: 5G connectivity and DDS
 
 ```bash
 # Start the Quectel 5G connection manager automatically when the modem appears
@@ -148,7 +165,7 @@ sudo cp robot/fastdds_rpi.xml.template /etc/
 ./robot/update_fastrtps_config.sh
 ```
 
-### 2. Front-end server: discovery server
+### 3. Front-end server: discovery server
 
 Start one discovery server for each robot, passing the robot ID. Each one listens on port `50075 + id`.
 
@@ -161,9 +178,9 @@ ros2 topic bw /oakd/stereo/image_raw/zstd   # check that the compressed depth st
 > [!NOTE]
 > The scripts share the discovery-server IP through a file on the UW RoboHub web server. If you deploy elsewhere, replace that URL in `start_discovery_server.sh` and `update_fastrtps_config.sh` with your own.
 
-### 3. Robot: 4D mmWave radar driver
+### 4. Robot: 4D mmWave radar driver
 
-The Altos 4D radar connects to the robot over Ethernet. Build the driver from [`radar_driver/`](radar_driver) in the robot's ROS 2 workspace, then run:
+The Altos 4D radar connects to the robot over Ethernet. Build the driver from [`radar/`](radar) in the robot's ROS 2 workspace, then run:
 
 ```bash
 sudo ip addr add 192.168.3.1/24 dev eth0   # put the robot on the radar's Ethernet subnet
@@ -171,9 +188,9 @@ source install/setup.bash
 ros2 run altosradar altosRadarParse        # publish the radar point cloud
 ```
 
-See the [radar driver README](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave#readme) for the ROS 1 instructions, RViz configs and rosbag conversion.
+See [`radar/README.md`](radar/README.md) for the ROS 1 instructions, RViz configs and rosbag conversion.
 
-### 4. Back-end: COVINS
+### 5. Back-end: COVINS
 
 Build COVINS and its ORB-SLAM3 front-end by following [`covins/readme.md`](covins/readme.md). Then use the configuration in [`backend/`](backend). Set `sys.server_ip` in `config_comm.yaml` to the IP of the machine that runs the back-end.
 
@@ -206,4 +223,4 @@ This work was carried out at the [RoboHub](https://uwaterloo.ca/robohub/), Unive
 
 ## License
 
-The third-party components keep their original licenses: COVINS and ORB-SLAM3 are GPLv3, and image_transport_plugins is BSD. See the license file in each component's folder.
+The third-party components keep their original licenses: COVINS and ORB-SLAM3 are GPLv3, image_transport_plugins is BSD, and the Quectel connection manager is distributed under the terms in [`drivers/quectel_5g/NOTICE`](drivers/quectel_5g/NOTICE). See the license file in each component's folder.
