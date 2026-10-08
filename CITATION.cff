@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: "If you use CRADMap, its code, or the 4D radar driver in your research, please cite the ICARM 2025 paper below."
-title: "CRADMap: Beyond the Visible"
+title: "CRADMap: Multi-Robot Mapping"
 authors:
   - family-names: Qureshi
     given-names: Maaz
-repository-code: "https://github.com/Maaz-qureshi98/CRADMap-Beyond-the-Visible"
+repository-code: "https://github.com/Maaz-qureshi98/CRADMap-Multi-Robot-Mapping"
 preferred-citation:
   type: conference-paper
   title: "CRADMap: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Perception"

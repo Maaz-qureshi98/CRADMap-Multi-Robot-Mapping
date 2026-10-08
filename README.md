@@ -84,7 +84,7 @@ University of Waterloo
 ## Repository structure
 
 ```
-CRADMap-Beyond-the-Visible/
+CRADMap-Multi-Robot-Mapping/
 ├── robot/                       # runs on each AMR
 │   ├── 99-qconnect.rules        # udev rule: starts the 5G modem manager when the modem appears
 │   ├── qconnect.service         # systemd unit for the Quectel connection manager
@@ -130,7 +130,7 @@ The 4D radar driver is included as a git submodule in [`radar_driver/`](radar_dr
 Clone the repository together with the radar driver submodule:
 
 ```bash
-git clone --recursive https://github.com/Maaz-qureshi98/CRADMap-Beyond-the-Visible.git
+git clone --recursive https://github.com/Maaz-qureshi98/CRADMap-Multi-Robot-Mapping.git
 # already cloned without --recursive? Fetch the submodule with:
 git submodule update --init --recursive
 ```
