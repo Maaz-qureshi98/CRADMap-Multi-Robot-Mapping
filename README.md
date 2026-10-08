@@ -101,8 +101,7 @@ CRADMap-Beyond-the-Visible/
 ├── image_transport_plugins/     # image_transport plugins, including zstd (third party, BSD)
 ├── radar_driver/                # submodule: 4D mmWave radar ROS 2 driver (Radar-ROS2_Perception-4DmmWave)
 └── media/
-    ├── gifs/                    # demo GIFs (made from the YouTube video)
-    └── figures/                 # paper and experiment figures
+    └── gifs/                    # demo GIFs (made from the YouTube video)
 ```
 
 The 4D radar driver is included as a git submodule in [`radar_driver/`](radar_driver). It comes from **[Radar-ROS2_Perception-4DmmWave](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)**.
@@ -177,63 +176,6 @@ See the [radar driver README](https://github.com/Maaz-qureshi98/Radar-ROS2_Perce
 ### 4. Back-end: COVINS
 
 Build COVINS and its ORB-SLAM3 front-end by following [`covins/readme.md`](covins/readme.md). Then use the configuration in [`backend/`](backend). Set `sys.server_ip` in `config_comm.yaml` to the IP of the machine that runs the back-end.
-
-## Experiments
-
-### Distributed mapping of the UW RoboHub lab
-
-<table>
-  <tr>
-    <td align="center"><img src="media/figures/lab_photo.jpg" width="100%"><br><sub>RoboHub lab, University of Waterloo</sub></td>
-    <td align="center"><img src="media/figures/lab_cradmap_360.png" width="100%"><br><sub>360° volumetric CRADMap from a single AMR</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="media/figures/lab_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map (baseline, no volumetric mapping)</sub></td>
-    <td align="center"><img src="media/figures/lab_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2"><img src="media/figures/lab_radar_occluded.png" width="60%"><br><sub>Radar point cloud showing objects hidden behind obstacles (boxed)</sub></td>
-  </tr>
-</table>
-
-### Radar scenario 1: vent pipe hidden by furniture (E7, 3rd floor corridor)
-
-A horizontal vent pipe near the floor is hidden behind furniture (red box).
-
-<table>
-  <tr>
-    <td align="center"><img src="media/figures/pipe_scene_1.jpg" width="100%"></td>
-    <td align="center"><img src="media/figures/pipe_scene_2.jpg" width="100%"></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="media/figures/pipe_cradmap.png" width="100%"><br><sub>CRADMap: the camera misses the pipe because of occlusion and its limited range</sub></td>
-    <td align="center"><img src="media/figures/pipe_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map: pipe not detected</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="media/figures/pipe_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
-    <td align="center"><img src="media/figures/pipe_radar.png" width="100%"><br><sub><b>4D radar detects and maps the pipe</b></sub></td>
-  </tr>
-</table>
-
-### Radar scenario 2: metal studs behind a wall (view fully blocked)
-
-Three metal studs stand behind a hand-built wall, so the camera cannot see them at all.
-
-<table>
-  <tr>
-    <td align="center"><img src="media/figures/studs_scene_1.jpg" width="100%"></td>
-    <td align="center"><img src="media/figures/studs_scene_2.jpg" width="100%"></td>
-    <td align="center"><img src="media/figures/studs_scene_3.jpg" width="100%"></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="media/figures/studs_cradmap.png" width="100%"><br><sub>CRADMap: cannot see behind the wall</sub></td>
-    <td align="center"><img src="media/figures/studs_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map: studs not detected</sub></td>
-    <td align="center"><img src="media/figures/studs_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="3"><img src="media/figures/studs_radar.png" width="60%"><br><sub><b>4D radar maps the metal studs through the wall</b></sub></td>
-  </tr>
-</table>
 
 ## Citation
 
