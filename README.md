@@ -98,7 +98,6 @@ CRADMap-Multi-Robot-Mapping/
 ├── radar/                       # Altos 4D mmWave radar driver (ROS 2 + ROS 1), RViz configs
 ├── drivers/
 │   └── quectel_5g/              # Quectel QConnectManager v1.6.5 source + 5G modem setup notes
-├── docker/                      # TurtleBot 4 (UWBot) Docker image, start script and VPN tooling
 ├── covins/                      # COVINS framework with the ORB-SLAM3 front-end (third party, GPLv3)
 ├── ORB_SLAM3_ROS2/              # ROS 2 wrapper for ORB-SLAM3, patched for CRADMap (third party, GPLv3)
 ├── image_transport_plugins/     # image_transport plugins, including zstd (third party, BSD)
@@ -106,7 +105,7 @@ CRADMap-Multi-Robot-Mapping/
     └── gifs/                    # demo GIFs (made from the YouTube video)
 ```
 
-Everything needed to reproduce CRADMap lives in this one repository: the robot and server scripts, the 4D radar driver, the 5G modem driver and the Docker environment.
+Everything needed to reproduce CRADMap lives in this one repository: the robot and server scripts, the 4D radar driver and the 5G modem driver.
 
 ## Requirements
 
@@ -133,13 +132,6 @@ Everything needed to reproduce CRADMap lives in this one repository: the robot a
 git clone https://github.com/Maaz-qureshi98/CRADMap-Multi-Robot-Mapping.git
 cd CRADMap-Multi-Robot-Mapping
 ```
-
-### 0. Development environment (optional): Docker
-
-[`docker/`](docker) has the TurtleBot 4 (UWBot) ROS 2 Humble container used in the experiments. Start it with `./docker/start.sh`. See [`docker/README.md`](docker/README.md) for the web interface, multi-robot containers and the VPN tunnel.
-
-> [!NOTE]
-> VPN credentials (`ca.crt`, `client.crt`, `client.key`) are **not** included. Ask the RoboHub admin for your own and place them in `docker/vpn/`. They are git-ignored.
 
 ### 1. Robot: 5G modem driver
 
