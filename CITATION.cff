@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite the CRADMap paper."
+message: "If you use CRADMap, its code, or the 4D radar driver in your research, please cite the ICARM 2025 paper below."
 title: "CRADMap: Beyond the Visible"
 authors:
   - family-names: Qureshi

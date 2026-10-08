@@ -12,6 +12,7 @@ University of Waterloo
 [![DOI](https://img.shields.io/badge/DOI-10.1109%2FICARM65671.2025.11293594-blue.svg)](https://doi.org/10.1109/ICARM65671.2025.11293594)
 [![Video](https://img.shields.io/badge/YouTube-Demo%20Video-FF0000.svg?logo=youtube)](https://youtu.be/eTLxCY2rRMA)
 [![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble-22314E.svg?logo=ros)](https://docs.ros.org/en/humble/)
+[![Radar Driver](https://img.shields.io/badge/GitHub-4D%20Radar%20Driver-181717.svg?logo=github)](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)
 [![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420.svg?logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
 
 ### **[📄 Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/11293594)** &nbsp;·&nbsp; **[▶ Watch the demo video on YouTube](https://youtu.be/eTLxCY2rRMA)**
@@ -23,6 +24,9 @@ University of Waterloo
 <sub>Click any GIF to watch the full video on YouTube. The GIFs play at 2.5–3× speed.</sub>
 
 </div>
+
+> [!IMPORTANT]
+> **If you use CRADMap, its code, or the 4D radar driver in your research, please [cite our ICARM 2025 paper](#citation).**
 
 ---
 
@@ -95,12 +99,13 @@ CRADMap-Beyond-the-Visible/
 ├── covins/                      # COVINS framework with the ORB-SLAM3 front-end (third party, GPLv3)
 ├── ORB_SLAM3_ROS2/              # ROS 2 wrapper for ORB-SLAM3 (third party)
 ├── image_transport_plugins/     # image_transport plugins, including zstd (third party, BSD)
+├── radar_driver/                # submodule: 4D mmWave radar ROS 2 driver (Radar-ROS2_Perception-4DmmWave)
 └── media/
     ├── gifs/                    # demo GIFs (made from the YouTube video)
     └── figures/                 # paper and experiment figures
 ```
 
-The 4D radar perception stack is in a separate repository: **[Radar-ROS2_Perception-4DmmWave](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)**.
+The 4D radar driver is included as a git submodule in [`radar_driver/`](radar_driver). It comes from **[Radar-ROS2_Perception-4DmmWave](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)**.
 
 ## Requirements
 
@@ -122,6 +127,14 @@ The 4D radar perception stack is in a separate repository: **[Radar-ROS2_Percept
 > This setup runs ROS 2 across the public internet **without any security**. Use it only on trusted networks or for research experiments.
 
 ## Getting started
+
+Clone the repository together with the radar driver submodule:
+
+```bash
+git clone --recursive https://github.com/Maaz-qureshi98/CRADMap-Beyond-the-Visible.git
+# already cloned without --recursive? Fetch the submodule with:
+git submodule update --init --recursive
+```
 
 ### 1. Robot: 5G connectivity and DDS
 
@@ -149,7 +162,19 @@ ros2 topic bw /oakd/stereo/image_raw/zstd   # check that the compressed depth st
 > [!NOTE]
 > The scripts share the discovery-server IP through a file on the UW RoboHub web server. If you deploy elsewhere, replace that URL in `start_discovery_server.sh` and `update_fastrtps_config.sh` with your own.
 
-### 3. Back-end: COVINS
+### 3. Robot: 4D mmWave radar driver
+
+The Altos 4D radar connects to the robot over Ethernet. Build the driver from [`radar_driver/`](radar_driver) in the robot's ROS 2 workspace, then run:
+
+```bash
+sudo ip addr add 192.168.3.1/24 dev eth0   # put the robot on the radar's Ethernet subnet
+source install/setup.bash
+ros2 run altosradar altosRadarParse        # publish the radar point cloud
+```
+
+See the [radar driver README](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave#readme) for the ROS 1 instructions, RViz configs and rosbag conversion.
+
+### 4. Back-end: COVINS
 
 Build COVINS and its ORB-SLAM3 front-end by following [`covins/readme.md`](covins/readme.md). Then use the configuration in [`backend/`](backend). Set `sys.server_ip` in `config_comm.yaml` to the IP of the machine that runs the back-end.
 
@@ -212,7 +237,7 @@ Three metal studs stand behind a hand-built wall, so the camera cannot see them 
 
 ## Citation
 
-If you find this work useful, please cite:
+If you use CRADMap, its code, or the 4D radar driver in your research, **please cite our paper**:
 
 ```bibtex
 @inproceedings{qureshi2025cradmap,
@@ -226,6 +251,12 @@ If you find this work useful, please cite:
   doi       = {10.1109/ICARM65671.2025.11293594}
 }
 ```
+
+You can also use the **"Cite this repository"** button in the GitHub sidebar, which reads [`CITATION.cff`](CITATION.cff).
+
+Plain-text citation (IEEE style):
+
+> M. Qureshi, A. Werner, Z. Liu, A. Khajepour, G. Shaker and W. Melek, "CRADMap: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Perception," in *2025 International Conference on Advanced Robotics and Mechatronics (ICARM)*, Portsmouth, United Kingdom, 2025, pp. 1–7, doi: 10.1109/ICARM65671.2025.11293594.
 
 ## Acknowledgements
 
