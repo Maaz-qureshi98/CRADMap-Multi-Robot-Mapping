@@ -1,70 +1,236 @@
-# CRADMap: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Sensing
-# YouTube Video Link: https://youtu.be/eTLxCY2rRMA
-# Publication Link: https://arxiv.org/abs/2503.00262
+<div align="center">
 
-The repository contains instructions and scripts
-to run distributed mapping on the Autonomous Mobile Robots with
-centralized processing. And for BtV Radar: https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave
+# CRADMap: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Perception
 
-Requirements - AMR(Robot):
-* Ubuntu 22.04, ROS2 Humble 
-* Public IPv6 address without a firewall
-* Enough upstream capacity to stream ~5MByte/s
-* image compression installed
-* Scripts from this repo
+**Maaz Qureshi, Alexander Werner, Zhenan Liu, Amir Khajepour, George Shaker, William Melek**
+<br>
+University of Waterloo
 
-Requirements - front end server:
-* AMR docker container with --network=host
-* Public IPv6 address without a firewall
-* Enough downstream bandwith: ROBOT_COUNT * 5 MByts/s
-Summary:
-* The robots oakd driver compresses the RGB and depth images separately
-  using PNG and zstd respectively.
-* The messages are then transferred to the fronti end server using ROS2
-* The front end docker runs a ROS2 SLAM with patches.It also runs the discovery server, one for each robot.
-* This runs ROS2 across the internet without any protections.
+**IEEE International Conference on Advanced Robotics and Mechatronics (ICARM) 2025** · Portsmouth, United Kingdom
 
-## Section II Introduction: Fig. 1
-- Robohub Lab Uwaterloo.
-![Experiment 1](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/1.1.jpg)
-- 360 degree volumetric map of the lab by single AMR.
-![Experiment 1](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/1.2.png)
-- Dense cloud map by ORBSLAM3 without volumetric feature. 
-![Experiment 1](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/1.3.png)
-- ORB features by ORBSLAM3, visual node i.e. OAK-D Pro camera FOV. 
-![Experiment 1](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/1.4.png)
-- Radar map (point cloud) objects present in occlusion/ behind the obstacles highlighted inside boundary box. 
-![Experiment 1](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/1.5.png)
+[![IEEE Xplore](https://img.shields.io/badge/IEEE%20Xplore-ICARM%202025-00629B.svg?logo=ieee)](https://ieeexplore.ieee.org/document/11293594)
+[![DOI](https://img.shields.io/badge/DOI-10.1109%2FICARM65671.2025.11293594-blue.svg)](https://doi.org/10.1109/ICARM65671.2025.11293594)
+[![Video](https://img.shields.io/badge/YouTube-Demo%20Video-FF0000.svg?logo=youtube)](https://youtu.be/eTLxCY2rRMA)
+[![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble-22314E.svg?logo=ros)](https://docs.ros.org/en/humble/)
+[![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420.svg?logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
 
+### **[📄 Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/11293594)** &nbsp;·&nbsp; **[▶ Watch the demo video on YouTube](https://youtu.be/eTLxCY2rRMA)**
 
-## Section IV: Experiment Fig. 4
-- The annotation in red boundary box shows the horizontal vent pipe present close to floor, present behind the furniture.
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.1.jpg)
+<a href="https://youtu.be/eTLxCY2rRMA">
+  <img src="media/gifs/cradmap_volumetric_map.gif" alt="CRADMap volumetric map of the UW RoboHub lab (click to watch on YouTube)" width="100%">
+</a>
 
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.2.jpg)
-- Volumetric map of the 3rd floor corridor of Uwaterloo engineering 7 building. The annotation in the red boundary box shows the location of pipe. 1) the white area in the middle is due to camera limited range, and few point cloud genrated by SLAM, 2) the visual sensor fails to locate the pipe because of occlusions such as furniture. 
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.3.png)
-- ORBSLAM3 dense cloud map (without volumetric map feature) fails to detects the pipe.
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.4.png)
-- ORB feature by ORBSLAM3, FOV from visual node i.e. OAK-D Pro camera.
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.5.png)
-- Radar succefully detects and map the vent pipe in the occluded area. 
-![Experiment 2](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/2.6.png)
+<sub>Click any GIF to watch the full video on YouTube. The GIFs play at 2.5–3× speed.</sub>
 
+</div>
 
-## Section IV: Experiment Fig. 5 
-- Mapping Beyond Visual Line of Sight. 3 Metal studs present behind the wall annotation in the red boundary box shows their location. The view is completly blocked. 
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.1.jpg)
+---
 
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.2.jpg)
+## Overview
 
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.3.jpg)
-- Volumetric map, visual node fails to map what is present behind the wall. 
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.4.png)
-- ORBLSAM3 dense map fails to make point cloud of studs present behind the wall.
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.5.png)
-- ORB features by ORBSLAM3. FOV of visual node i.e. OAK-D Pro camera.
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.6.png)
-- Radar succefully map the metallic stud present behind the wall, able to see through the complete blocked field of view. 
-![Experiment 3](https://github.com/Maaz-qureshi98/Volumetric-Mapping/blob/main/3.7.png)
+**CRADMap** builds dense, globally consistent **volumetric 3D maps** with a team of low-cost autonomous mobile robots (AMRs) connected over **5G**. Each robot streams compressed RGB-D data to a central server, which runs the heavy SLAM and map fusion, so the robots' onboard computers are not overloaded. A **4D mmWave radar** adds a second point-cloud map of metallic objects that cameras cannot see because they are **occluded or behind walls**. This is the "beyond the visible" part of the project.
 
+**Highlights**
+
+- **Distributed volumetric mapping.** ORB-SLAM3 runs per robot on the server, and the [COVINS](https://github.com/VIS4ROB-lab/covins) back-end does global optimisation. Dense keyframes are fused into a single volumetric map.
+- **5G-connected multi-robot system.** Four AMRs map different areas of the UW E7 building at the same time. ROS 2 runs over public IPv6 with one Fast DDS discovery server per robot.
+- **Bandwidth-efficient streaming.** On each robot, RGB images are PNG-compressed and depth images are compressed with zstd before they are sent.
+- **4D radar perception.** An Altos 4D mmWave radar maps occluded metallic objects, such as a vent pipe hidden behind furniture and metal studs behind a wall, that the visual pipeline misses.
+
+## Demo
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <a href="https://youtu.be/eTLxCY2rRMA"><img src="media/gifs/cradmap_multi_robot.gif" alt="Four AMRs mapping different floors of UW E7"></a>
+      <br><b>Distributed mapping with 4 AMRs</b><br><sub>Lab, classroom, stairs and faculty corridor mapped at the same time</sub>
+    </td>
+    <td align="center" width="50%">
+      <a href="https://youtu.be/eTLxCY2rRMA"><img src="media/gifs/cradmap_radar_vent_pipe.gif" alt="Radar detecting an occluded vent pipe"></a>
+      <br><b>Radar scenario 1: cluttered indoor scene</b><br><sub>Radar maps a vent pipe hidden behind furniture</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <a href="https://youtu.be/eTLxCY2rRMA"><img src="media/gifs/cradmap_radar_metal_studs.gif" alt="Radar detecting metal studs behind a wall" width="70%"></a>
+      <br><b>Radar scenario 2: view fully blocked</b><br><sub>Radar maps three metal studs behind a hand-built wall</sub>
+    </td>
+  </tr>
+</table>
+
+## System architecture
+
+```
+ ┌─────────────── AMR ×N (TurtleBot 4 + OAK-D Pro + 4D radar) ───────────────┐
+ │  OAK-D driver ──► RGB: PNG compressed  ─┐                                  │
+ │                 ► Depth: zstd          ─┼──► ROS 2 (Fast DDS, IPv6) ──┐    │
+ │  Quectel 5G modem (qconnect.service)    ┘                             │    │
+ └───────────────────────────────────────────────────────────────────────┼───┘
+                                                5G network               │
+ ┌───────────────────────── Front-end server (Docker) ───────────────────▼───┐
+ │  Fast DDS discovery server (one per robot, port 50075 + id)               │
+ │  ORB-SLAM3 agent per robot (patched) ──► dense keyframes                  │
+ └───────────────────────────────────────────────┬───────────────────────────┘
+                                                 ▼
+ ┌──────────────────────────── COVINS back-end ──────────────────────────────┐
+ │  Global optimisation, loop closure, map merging ──► volumetric CRADMap    │
+ └───────────────────────────────────────────────────────────────────────────┘
+```
+
+## Repository structure
+
+```
+CRADMap-Beyond-the-Visible/
+├── robot/                       # runs on each AMR
+│   ├── 99-qconnect.rules        # udev rule: starts the 5G modem manager when the modem appears
+│   ├── qconnect.service         # systemd unit for the Quectel connection manager
+│   ├── fastdds_rpi.xml.template # Fast DDS profile (IPv4 local + IPv6 over 5G)
+│   └── update_fastrtps_config.sh
+├── frontend/                    # runs on the central server
+│   ├── fastdds.xml.template
+│   └── start_discovery_server.sh
+├── backend/                     # COVINS back-end configuration
+│   ├── config_backend.yaml
+│   └── config_comm.yaml
+├── covins/                      # COVINS framework with the ORB-SLAM3 front-end (third party, GPLv3)
+├── ORB_SLAM3_ROS2/              # ROS 2 wrapper for ORB-SLAM3 (third party)
+├── image_transport_plugins/     # image_transport plugins, including zstd (third party, BSD)
+└── media/
+    ├── gifs/                    # demo GIFs (made from the YouTube video)
+    └── figures/                 # paper and experiment figures
+```
+
+The 4D radar perception stack is in a separate repository: **[Radar-ROS2_Perception-4DmmWave](https://github.com/Maaz-qureshi98/Radar-ROS2_Perception-4DmmWave)**.
+
+## Requirements
+
+**AMR (robot)**
+
+- Ubuntu 22.04 with ROS 2 Humble
+- A public IPv6 address with no firewall blocking it
+- About 5 MB/s of upstream bandwidth per robot
+- `image_transport_plugins` (PNG and zstd compression)
+- The scripts in [`robot/`](robot)
+
+**Front-end server**
+
+- The AMR Docker container, run with `--network=host`
+- A public IPv6 address with no firewall blocking it
+- Downstream bandwidth of about `ROBOT_COUNT × 5 MB/s`
+
+> [!WARNING]
+> This setup runs ROS 2 across the public internet **without any security**. Use it only on trusted networks or for research experiments.
+
+## Getting started
+
+### 1. Robot: 5G connectivity and DDS
+
+```bash
+# Start the Quectel 5G connection manager automatically when the modem appears
+sudo cp robot/qconnect.service /etc/systemd/system/
+sudo cp robot/99-qconnect.rules /etc/udev/rules.d/
+sudo systemctl daemon-reload
+
+# Install the Fast DDS profile template, then fill it in with the 5G IPv6 address and discovery server IP
+sudo cp robot/fastdds_rpi.xml.template /etc/
+./robot/update_fastrtps_config.sh
+```
+
+### 2. Front-end server: discovery server
+
+Start one discovery server for each robot, passing the robot ID. Each one listens on port `50075 + id`.
+
+```bash
+./frontend/start_discovery_server.sh 1
+export FASTRTPS_DEFAULT_PROFILES_FILE=$PWD/frontend/fastdds.xml
+ros2 topic bw /oakd/stereo/image_raw/zstd   # check that the compressed depth stream is arriving
+```
+
+> [!NOTE]
+> The scripts share the discovery-server IP through a file on the UW RoboHub web server. If you deploy elsewhere, replace that URL in `start_discovery_server.sh` and `update_fastrtps_config.sh` with your own.
+
+### 3. Back-end: COVINS
+
+Build COVINS and its ORB-SLAM3 front-end by following [`covins/readme.md`](covins/readme.md). Then use the configuration in [`backend/`](backend). Set `sys.server_ip` in `config_comm.yaml` to the IP of the machine that runs the back-end.
+
+## Experiments
+
+### Distributed mapping of the UW RoboHub lab
+
+<table>
+  <tr>
+    <td align="center"><img src="media/figures/lab_photo.jpg" width="100%"><br><sub>RoboHub lab, University of Waterloo</sub></td>
+    <td align="center"><img src="media/figures/lab_cradmap_360.png" width="100%"><br><sub>360° volumetric CRADMap from a single AMR</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="media/figures/lab_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map (baseline, no volumetric mapping)</sub></td>
+    <td align="center"><img src="media/figures/lab_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><img src="media/figures/lab_radar_occluded.png" width="60%"><br><sub>Radar point cloud showing objects hidden behind obstacles (boxed)</sub></td>
+  </tr>
+</table>
+
+### Radar scenario 1: vent pipe hidden by furniture (E7, 3rd floor corridor)
+
+A horizontal vent pipe near the floor is hidden behind furniture (red box).
+
+<table>
+  <tr>
+    <td align="center"><img src="media/figures/pipe_scene_1.jpg" width="100%"></td>
+    <td align="center"><img src="media/figures/pipe_scene_2.jpg" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="media/figures/pipe_cradmap.png" width="100%"><br><sub>CRADMap: the camera misses the pipe because of occlusion and its limited range</sub></td>
+    <td align="center"><img src="media/figures/pipe_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map: pipe not detected</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="media/figures/pipe_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
+    <td align="center"><img src="media/figures/pipe_radar.png" width="100%"><br><sub><b>4D radar detects and maps the pipe</b></sub></td>
+  </tr>
+</table>
+
+### Radar scenario 2: metal studs behind a wall (view fully blocked)
+
+Three metal studs stand behind a hand-built wall, so the camera cannot see them at all.
+
+<table>
+  <tr>
+    <td align="center"><img src="media/figures/studs_scene_1.jpg" width="100%"></td>
+    <td align="center"><img src="media/figures/studs_scene_2.jpg" width="100%"></td>
+    <td align="center"><img src="media/figures/studs_scene_3.jpg" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="media/figures/studs_cradmap.png" width="100%"><br><sub>CRADMap: cannot see behind the wall</sub></td>
+    <td align="center"><img src="media/figures/studs_orbslam3_dense.png" width="100%"><br><sub>ORB-SLAM3 dense map: studs not detected</sub></td>
+    <td align="center"><img src="media/figures/studs_orb_features.png" width="100%"><br><sub>ORB features in the OAK-D Pro field of view</sub></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="3"><img src="media/figures/studs_radar.png" width="60%"><br><sub><b>4D radar maps the metal studs through the wall</b></sub></td>
+  </tr>
+</table>
+
+## Citation
+
+If you find this work useful, please cite:
+
+```bibtex
+@inproceedings{qureshi2025cradmap,
+  title     = {{CRADMap}: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Perception},
+  author    = {Qureshi, Maaz and Werner, Alexander and Liu, Zhenan and Khajepour, Amir and Shaker, George and Melek, William},
+  booktitle = {2025 International Conference on Advanced Robotics and Mechatronics (ICARM)},
+  address   = {Portsmouth, United Kingdom},
+  pages     = {1--7},
+  year      = {2025},
+  publisher = {IEEE},
+  doi       = {10.1109/ICARM65671.2025.11293594}
+}
+```
+
+## Acknowledgements
+
+This work was carried out at the [RoboHub](https://uwaterloo.ca/robohub/), University of Waterloo. It builds on [ORB-SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3), [COVINS](https://github.com/VIS4ROB-lab/covins), [ORB_SLAM3_ROS2](https://github.com/zang09/ORB_SLAM3_ROS2) and [image_transport_plugins](https://github.com/ros-perception/image_transport_plugins).
+
+## License
+
+The third-party components keep their original licenses: COVINS and ORB-SLAM3 are GPLv3, and image_transport_plugins is BSD. See the license file in each component's folder.

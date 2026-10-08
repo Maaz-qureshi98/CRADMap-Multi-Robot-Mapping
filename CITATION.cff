@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the CRADMap paper."
+title: "CRADMap: Beyond the Visible"
+authors:
+  - family-names: Qureshi
+    given-names: Maaz
+repository-code: "https://github.com/Maaz-qureshi98/CRADMap-Beyond-the-Visible"
+preferred-citation:
+  type: conference-paper
+  title: "CRADMap: Applied Distributed Volumetric Mapping with 5G-Connected Multi-Robots and 4D Radar Perception"
+  authors:
+    - family-names: Qureshi
+      given-names: Maaz
+    - family-names: Werner
+      given-names: Alexander
+    - family-names: Liu
+      given-names: Zhenan
+    - family-names: Khajepour
+      given-names: Amir
+    - family-names: Shaker
+      given-names: George
+    - family-names: Melek
+      given-names: William
+  collection-title: "2025 International Conference on Advanced Robotics and Mechatronics (ICARM)"
+  publisher:
+    name: IEEE
+  conference:
+    name: "ICARM 2025"
+    city: Portsmouth
+    country: GB
+  start: 1
+  end: 7
+  year: 2025
+  doi: "10.1109/ICARM65671.2025.11293594"
+  url: "https://ieeexplore.ieee.org/document/11293594"

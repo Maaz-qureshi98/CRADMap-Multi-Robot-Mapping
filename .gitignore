@@ -1,0 +1,21 @@
+# ROS 2 / colcon build outputs
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Raw videos (hosted on YouTube; GIF previews live in media/gifs/)
+*.mp4
+*.mov
+*.avi
+
+# Papers
+*.pdf
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
