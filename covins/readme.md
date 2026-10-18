@@ -141,12 +141,12 @@ We provide easy switching between the different backends (COVINS and COVINS_G) b
 <a name="run_covins"></a>
 ### COVINS Back-End
 
-The instructions for running a COVINS back-end can be found [here](/docs/run_COVINS.md).
+The instructions for running a COVINS back-end can be found [here](docs/run_COVINS.md).
 
 <a name="run_covinsg"></a>
 ### COVINS-G Back-End
 
-The instructions for running a COVINS-G back-end can be found [here](/docs/run_COVINS-G.md).
+The instructions for running a COVINS-G back-end can be found [here](docs/run_COVINS-G.md).
 
 <a name="docker"></a>
 ## 5 Docker Implementation
