@@ -291,7 +291,7 @@ The convins server back-end needs a running roscore, how to start one see above.
 * ```./run.sh -s ../covins_comm/config/config_comm.yaml ../covins_backend/config/config_backend.yaml```
 
 #### ORB-SLAM3 Front-End
-The ORB-SLAM3 front-end client needs the communication server config file, the file which should be executed, and the path to the dataset. The dataset has to be given seperately since the file system of the docker container differs from the host system. Hence, the `pathDatasetEuroc` variable in the run script gets adapted automatically inside the docker container.
+The ORB-SLAM3 front-end client needs the communication server config file, the file which should be executed, and the path to the dataset. The dataset has to be given separately since the file system of the docker container differs from the host system. Hence, the `pathDatasetEuroc` variable in the run script gets adapted automatically inside the docker container.
 * ```./run.sh -o ../covins_comm/config/config_comm.yaml ../orb_slam3/covins_examples/euroc_examples_mh1 <dataset_path, e.g. /home/pschmuck/data/euroc>```
 
 #### ORB-SLAM3 ROS Front-End
