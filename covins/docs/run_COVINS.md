@@ -8,7 +8,7 @@ This section explains how to run COVINS on the [EuRoC dataset](https://projects.
 
 Make sure that you have selected the correct back-end (```COVINS```) in the ```~/ws/covins_ws/src/covins/covins_backend/config/config_backend.yaml``` file. This is specified using the ```placerec.type``` parameter.
 
-![Covisibilty graphs](/.aux/covins_config.png)
+![Covisibilty graphs](../.aux/covins_config.png)
 
 ### Index
 
@@ -53,7 +53,7 @@ Example scripts are provided in ```orb_slam3/covins_examples/```. Don't forget t
         * If the front-end is stuck after showing ```--> Connect to server
 ``` or shows an error message ```Could no establish connection - exit```, the server is not reachable - the IP might be incorrect, you might have forgotten to start the server, or there is a problem with your network (try pinging the server IP)
 
-COVINS does not support resetting the map onboard the agent. Since map resets are more frequent at the beginning of a session or dataset, for example due to faulty initialization, in the current implementation, the COVINS communication module is set up such that it only starts sending data if a pre-specified number of keyframes was already created by the front-end. This number is specified by ```comm.start_sending_after_kf``` in ```covins/covins_comm/config/config_comm.yaml```, and is currently set to 50. Also check [Limitations](/readme.md#issues) for more details.
+COVINS does not support resetting the map onboard the agent. Since map resets are more frequent at the beginning of a session or dataset, for example due to faulty initialization, in the current implementation, the COVINS communication module is set up such that it only starts sending data if a pre-specified number of keyframes was already created by the front-end. This number is specified by ```comm.start_sending_after_kf``` in ```covins/covins_comm/config/config_comm.yaml```, and is currently set to 50. Also check [Limitations](../readme.md#issues) for more details.
 
 <a name="run_viz"></a>
 ### Visualization
@@ -66,7 +66,7 @@ COVINS provides a config file for visualization with RVIZ (```covins.rviz``` in 
     * In case keyframes are visualized, removed keyframes are displayed in red (keyframes are not shown by default, but can be activated in RVIZ).
     * The section _VISUALIZATION_ in ```config_backend.yaml``` provides several options to modify the visualization.
 
-![Covisibilty graphs](/.aux/cov_graph_examples.png)
+![Covisibilty graphs](../.aux/cov_graph_examples.png)
 
 **NOTE**: When running multiple agents in parallel, and the maps are not merged yet, the visualization in RVIZ might toggle between the visualization of both trajectories.
 
