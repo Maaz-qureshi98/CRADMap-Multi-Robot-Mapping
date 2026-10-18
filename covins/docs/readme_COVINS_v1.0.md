@@ -128,7 +128,7 @@ If you want to use `rosbag` files to pass sensor data to COVINS, you need to exp
     * Open ```~/ws/covins_ws/src/vision_opencv/cv_bridge/CMakeLists.txt```
         * Add the ```opencv3_catkin``` dependency: change the line ```find_package(catkin REQUIRED COMPONENTS rosconsole sensor_msgs)``` to ```find_package(catkin REQUIRED COMPONENTS rosconsole sensor_msgs opencv3_catkin)```
         * If you are running **Ubuntu 20** (or generally have OpenCV 4 installed): remove the lines that search for an OpenCV 4 version in the ```CMakeLists.txt```. It should look like this:
-        ![cv_bridge OpenCV dependencies](.aux/cv_bridge_opencv_dependency.png)
+        ![cv_bridge OpenCV dependencies](../.aux/cv_bridge_opencv_dependency.png)
     * ```source ~/ws/covins_ws/devel/setup.bash```
     * ```catkin build cv_bridge```
     * [Optional] Check correct linkage:
@@ -194,7 +194,7 @@ COVINS provides a config file for visualization with RVIZ (```covins.rviz``` in 
     * In case keyframes are visualized, removed keyframes are displayed in red (keyframes are not shown by default, but can be activated in RVIZ).
     * The section _VISUALIZATION_ in ```config_backend.yaml``` provides several options to modify the visualization.
 
-![Covisibilty graphs](.aux/cov_graph_examples.png)
+![Covisibilty graphs](../.aux/cov_graph_examples.png)
 
 **NOTE**: When running multiple agents in parallel, and the maps are not merged yet, the visualization in RVIZ might toggle between the visualization of both trajectories.
 
@@ -317,10 +317,10 @@ We have tested COVINS with remote cloud servers provides by [Amazons AWS](https:
 * AWS virtual machines by default block most incoming and outgoing traffic, so you need to adjust the security groups. Don't forget to modify both inbound and outbound rules.
     * Some information on setting security groups can be found [here](https://aws.amazon.com/premiumsupport/knowledge-center/connect-http-https-ec2/).
     * As a straightforward solution, you can just allow **any** traffic: In *Step 6: Configure Security Group* of the AWS instance launch process, add a rule as follows (note that this leaves your remote server also unprotected against unauthorized access):
-![AWS security group setup](.aux/aws_rule_all_traffic.png)
+![AWS security group setup](../.aux/aws_rule_all_traffic.png)
 <!--
     * The following rules will allow **any** traffic (note that this leaves your remote server also unprotected against unauthorized access):
-![AWS security group setup](.aux/aws_securiy_rules.png)
+![AWS security group setup](../.aux/aws_securiy_rules.png)
 -->
 * Launch your instance and install COVINS
 * On your local machine (or any other machine where you would like to run the front-end), set ```sys.server_ip``` in ```config_comm.yaml``` to the **public** IPv4 address of your instance

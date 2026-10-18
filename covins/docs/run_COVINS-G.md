@@ -17,7 +17,7 @@ If you use the COVINS-G extension in an academic work, please cite:
 
 Make sure that you have selected the correct back-end (```COVINS_G```) in the ```~/ws/covins_ws/src/covins/covins_backend/config/config_backend.yaml``` file. This is specified using the ```placerec.type``` parameter.
 
-![Covisibilty graphs](/.aux/covinsg_config.png)
+![Covisibilty graphs](../.aux/covinsg_config.png)
 
 ### Index
 
@@ -147,7 +147,7 @@ We provide an example for running a different VIO front-end without doing modifi
 
 * In a new terminal, source the workspace: ```source ~/svo_ws/devel/setup.bash```
 * Modify the topics (cam0, cam1, imu )in the ```~/svo_ws/src/rpg_svo_pro_open/svo_ros/launch/frontend/euroc_stereo_frontend_imu.launch``` launch file according to the agent. For example the following modifications are required for first agent :
-![svo launch](/.aux/svo_launch.png)
+![svo launch](../.aux/svo_launch.png)
 * Launch the agent: ``` roslaunch svo_ros euroc_stereo_frontend_imu.launch```
 * In a new terminal, source the ```COVINS``` repository: ```source ~/ws/covins_ws/devel/setup.bash```.
 * Run ```roslaunch covins_frontend svo_euroc.launch```. This will launch the front-end wrapper which will subscribe to the odomtery topic from the svo-front-end node and the image frame from the ROS bag file.
@@ -156,7 +156,7 @@ We provide an example for running a different VIO front-end without doing modifi
 * Note: If you would like to use multiple SVO-pro agents parallelly, modifications will need to be done to the SVo-pro codebase such that the odometry of each agent is published on a separate ROS topic that can be specified as a parameter in the launch file. For now, you can run sequential agents using the same topics (always agent 0).
 
 * One thing to note while using a custom VIO front-end is that frame of reference in which the odometry topic is published. It can be either in the camera frame or in the IMU (body frame). This needs to be specified to the front-end wrapper in the config file (```covins_frontend/config/EuRoC.yaml```). This can be seen in the screenshot below:  
-![odom imu](/.aux/frontend-odomimu.png)
+![odom imu](../.aux/frontend-odomimu.png)
 
 <a name="run_fe_mix"></a>
 ### Mixture of Front-Ends
@@ -206,11 +206,11 @@ We provide sample config files for the Realsense D455 camera to be used with thr
     * Run ```roslaunch covins_frontend vins_d455_agent.launch```.
 
 * Note: We recommend to play around with the KF-generation parameters, according to the scene. For example, for an outdoor scene, higher thresholds for KF-generation can be used (e.g. transl= 0.3m, rot: 0.2 rad) so that we do not have a lot of redundant KFs for the back-end to process. This parameters are available in ```covins_frontend/config/d455.yaml``` file.
-![KF thresholds](/.aux/frontend-thresh.png)
+![KF thresholds](../.aux/frontend-thresh.png)
 
 * Note: In a separate experiment where we tried to run a T265 agent and a D455 agent contributing simulatenously, we found that the transforms for the T265 have an offset of around 90 degrees due to which we were unable to obtain an inter-agent loop closures using the default parameters. To solve this issue, we can increase the ```max_yaw``` parameter in the ```../covins_backend/config/config_backend.yaml``` to something like 180 degrees (So essentially this parameter will be ignored)
   
-  ![max_yaw](/.aux/max_yaw.png)
+  ![max_yaw](../.aux/max_yaw.png)
   
 
 <a name="run_sift"></a>
@@ -219,9 +219,9 @@ We provide sample config files for the Realsense D455 camera to be used with thr
 It is possible to use alternative keypoints and feature descriptors instead of the default ORB features. For example, SIFT features might be useful in cases where the viewpoint changes are quite high between the different agents (example, aerial-ground robot teaming). In order to use this functionality, one needs to use the ROS-based front-end wrapper. The following modifications will need to be done in the config files:
 
 * In ```../covins_frontend/config/EuRoC.yaml```, change the ```extractor.type``` parameter to ```SIFT```. Note, here the ```EuRoC.yaml``` is just a sample config file. make sure that you modify it in the correct config file.
-  ![sift_frontend](/.aux/sift_frontend.png)
+  ![sift_frontend](../.aux/sift_frontend.png)
 * In ```../covins_backend/config/config_backend.yaml```, change the ```feat.type``` and the ```feat.desc_length``` parameters to the following:
-  ![sift_backend](/.aux/sift_backend.png)
+  ![sift_backend](../.aux/sift_backend.png)
 
 Now, you can launch the agents as before, for example 2 agents on EuRoC dataset:
 * [Server back-end](#run_be)
