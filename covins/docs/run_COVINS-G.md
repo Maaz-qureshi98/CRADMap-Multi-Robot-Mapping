@@ -161,7 +161,7 @@ We provide an example for running a different VIO front-end without doing modifi
 <a name="run_fe_mix"></a>
 ### Mixture of Front-Ends
 
-With COVINS-G, it is possible to run parallel agents each running a different front-end and contributing simulatenously to the same map. The following instructions will run 3 different agents with different front-ends. It assumes that the above instructions were followed such that you have built repositories of SVO-Pro and VINS-Fusion.
+With COVINS-G, it is possible to run parallel agents each running a different front-end and contributing simultaneously to the same map. The following instructions will run 3 different agents with different front-ends. It assumes that the above instructions were followed such that you have built repositories of SVO-Pro and VINS-Fusion.
 
 Run the back-end [Instructions](#run_be)
    
@@ -208,7 +208,7 @@ We provide sample config files for the Realsense D455 camera to be used with thr
 * Note: We recommend to play around with the KF-generation parameters, according to the scene. For example, for an outdoor scene, higher thresholds for KF-generation can be used (e.g. transl= 0.3m, rot: 0.2 rad) so that we do not have a lot of redundant KFs for the back-end to process. This parameters are available in ```covins_frontend/config/d455.yaml``` file.
 ![KF thresholds](../.aux/frontend-thresh.png)
 
-* Note: In a separate experiment where we tried to run a T265 agent and a D455 agent contributing simulatenously, we found that the transforms for the T265 have an offset of around 90 degrees due to which we were unable to obtain an inter-agent loop closures using the default parameters. To solve this issue, we can increase the ```max_yaw``` parameter in the ```../covins_backend/config/config_backend.yaml``` to something like 180 degrees (So essentially this parameter will be ignored)
+* Note: In a separate experiment where we tried to run a T265 agent and a D455 agent contributing simultaneously, we found that the transforms for the T265 have an offset of around 90 degrees due to which we were unable to obtain an inter-agent loop closures using the default parameters. To solve this issue, we can increase the ```max_yaw``` parameter in the ```../covins_backend/config/config_backend.yaml``` to something like 180 degrees (So essentially this parameter will be ignored)
   
   ![max_yaw](../.aux/max_yaw.png)
   
